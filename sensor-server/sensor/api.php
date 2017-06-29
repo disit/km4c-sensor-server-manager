@@ -492,6 +492,18 @@ function valid_sensor($obj){
         $obj['device_model'] = NULL;
     if(!isset($obj['profile']))
         $obj['profile'] = NULL;
+//------------------ init new data 14/04 
+/*lin_acc_x    lin_acc_y    lin_acc_z   avg_lin_acc_magn  avg_speed */
+    if(!isset($obj['lin_acc_x']))
+        $obj['lin_acc_x'] = 'NULL';
+    if(!isset($obj['lin_acc_y']))
+        $obj['lin_acc_y'] = 'NULL';
+    if(!isset($obj['lin_acc_z']))
+        $obj['lin_acc_z'] = 'NULL';
+    if(!isset($obj['avg_lin_acc_magn']))
+        $obj['avg_lin_acc_magn'] = 'NULL';
+    if(!isset($obj['avg_speed']))
+        $obj['avg_speed'] = 'NULL';
 
 //necessario gestire i due parametri 'device_id' e 'uid' che contengono la stessa infomrazione
 //in base alle versioni della App io ricevo uno dei due parametri
@@ -999,13 +1011,15 @@ else
                 $cc_y = round(6371000 * log(tan(pi()/4+$latitude_no_spaces/180*pi()/2))/69)*69; 
 
 
-            $query2 = "INSERT INTO sensors.user_eval (date, device_id, latitude, longitude, cc_x, cc_y, speed, altitude, provider, accuracy, heading, lat_pre_scan, long_pre_scan, date_pre_scan, prev_status, curr_status, appID, version, lang, uid2, profile ) VALUES ( '".
+
+            $query2 = "INSERT INTO sensors.user_eval (date, device_id, latitude, longitude, cc_x, cc_y, speed, altitude, provider, accuracy, heading, lat_pre_scan, long_pre_scan, date_pre_scan, prev_status, curr_status, appID, version, lang, uid2, profile, lin_acc_x, lin_acc_y, lin_acc_z, avg_lin_acc_magn, avg_speed) VALUES ( '".
                         $obj['date']."' , ".$uid_insert.
                         " , ".$latitude_no_spaces." , ".$longitude_no_spaces." , $cc_x, $cc_y, ".$obj['speed']." , ".$obj['altitude'].
                         " , '". $obj['provider']."' , ". $obj['accuracy']." , ".$obj['heading']. " , ".$lat_pre_scan_no_spaces.
                         " , ".$long_pre_scan_no_spaces." , " .$obj['date_pre_scan']." , '".$obj['prev_status']."' , '".$obj['status'].
                         "', '".$obj['appID']."' , '".$obj['version']."', '".$obj['lang']."', '".$obj['uid2']."','".$obj['profile'].
-                        "')";
+                        "', ".$obj['lin_acc_x']." , ".$obj['lin_acc_y'].", ".$obj['lin_acc_z'].", ".$obj['avg_lin_acc_magn'].", ".$obj['avg_speed'].
+                        ")";
         //}
     }
     
